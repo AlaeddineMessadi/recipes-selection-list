@@ -40,8 +40,7 @@ const Recipes = () => {
     checkMinMaxRecipesSelected();
 
     // update Summary list
-    const selectedList = makeSummary(selectedRecipes);
-    setSummary(selectedList);
+    updateSummary();
   };
 
   const handleRemoveRecipe = (recipeId) => {
@@ -63,17 +62,18 @@ const Recipes = () => {
     checkMinMaxRecipesSelected();
 
     // update Summary List
-    const selectedList = makeSummary(selectedRecipes);
-    setSummary(selectedList);
+    updateSummary();
   };
 
-  const makeSummary = (recipes) =>
-    recipes
+  const updateSummary = React.useCallback(() => {
+    const selectedList = recipes
       .filter((recipe) => recipe.selected > 0)
       .map((recipe) => ({
         title: `${recipe.name}${recipe.selected > 1 ? ' x ' + recipe.selected : ''}`,
         price: parseRawPrice((box.baseRecipePrice + recipe.extraCharge) * recipe.selected),
       }));
+    setSummary(selectedList);
+  }, [box.baseRecipePrice, recipes]);
 
   /**
    * Check minRecipesSelected and maxRecipesSelected exceeded
@@ -98,8 +98,9 @@ const Recipes = () => {
       setRecipes(fetchedRecipes);
       setBox({ min, max, baseRecipePrice, shippingPrice });
       checkMinMaxRecipesSelected();
+      updateSummary();
     }
-  }, [setRecipes, data, checkMinMaxRecipesSelected]);
+  }, [setRecipes, data, checkMinMaxRecipesSelected, updateSummary]);
 
   if (loading) {
     return null;
