@@ -13,6 +13,9 @@ const Recipes = () => {
   const [recipes, setRecipes] = React.useState([]);
   const { data, loading } = useFetchHelloFreshBox();
 
+  const [minRecipesSelected, setMinRecipesSelected] = React.useState(false);
+  const [maxRecipesSelected, setMaxRecipesSelected] = React.useState(false);
+
   // add/remove recipe, feel free to remove or rename these these variables and values.
   const handleAddRecipe = (recipeId) => {
     let recipesClone = recipes.map((recipe) => {
@@ -35,8 +38,8 @@ const Recipes = () => {
   const handleRemoveRecipe = () => null;
 
   // min/max recipe boundaries, feel free to remove or rename these variables and values.
-  const minRecipesSelected = false;
-  const maxRecipesSelected = false;
+  // const minRecipesSelected = false;
+  // const maxRecipesSelected = false;
 
   // price summary and total price, feel free to remove or rename these variables and values.
   const summary = [];
