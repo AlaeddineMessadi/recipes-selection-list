@@ -1,7 +1,7 @@
 import React from 'react';
 import PriceSummary from './PriceSummary';
 // import react-testing methods
-import { render, waitFor } from '@testing-library/react';
+import { getAllByText, render, waitFor } from '@testing-library/react';
 
 const mockedData = [
   { title: 'Chicken Sausage & Spinach Ravioli', price: 1798 },
@@ -24,5 +24,13 @@ describe('PriceSummary: *****', () => {
     expect(rows.length).toBe(5);
     // console.log(rows[4])
     expect(getByText('$66.92')).toBeInTheDocument();
+  });
+
+  test('PriceSummary should render all 4 recipes', async () => {
+    const { container, getAllByText } = render(
+      <PriceSummary summary={mockedData} totalPrice="6692" />
+    );
+    expect(getAllByText('$17.98').length).toBe(3);
+    expect(getAllByText('$12.98').length).toBe(1);
   });
 });
