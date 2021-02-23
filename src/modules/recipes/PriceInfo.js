@@ -13,7 +13,7 @@ const PriceInfo = ({ summary, totalPrice }) => {
   useOnClickOutside(ref, () => setTooltipOpen(false));
 
   return (
-    <TooltipContainer ref={ref} data-testid="price-summary-tooltip">
+    <TooltipContainer ref={ref}>
       <IconButton onClick={() => setTooltipOpen(!isTooltipOpen)}>
         <IconInfoCircle size="20" />
       </IconButton>

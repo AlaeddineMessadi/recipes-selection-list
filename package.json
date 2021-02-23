@@ -21,7 +21,12 @@
     "test": "react-scripts test  --env=jest-environment-jsdom-sixteen",
     "lint": "eslint src --ext .js,.jsx",
     "precommit": "lint-staged",
-    "commit": "cz"
+    "commit": "cz",
+    "cypress": "cypress open",
+    "cypress:start:app": "BROWSER=none react-scripts -r @cypress/instrument-cra start",
+    "cypress:start:wait": "start-server-and-test cypress:start:app http://localhost:3000",
+    "cypress:open": "npm run cypress:start:wait -- \"cypress open\"",
+    "cypress:run": "npm run cypress:start:wait -- \"cypress run\""
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -39,12 +44,18 @@
     ]
   },
   "devDependencies": {
+    "@cypress/code-coverage": "^3.9.2",
+    "@cypress/instrument-cra": "^1.4.0",
     "commitizen": "^4.2.3",
+    "cypress": "^6.5.0",
     "cz-conventional-changelog": "3.3.0",
     "husky": "^5.1.1",
+    "istanbul-lib-coverage": "^3.0.0",
     "jest-environment-jsdom-sixteen": "^1.0.3",
     "lint-staged": "^10.4.0",
-    "prettier": "^2.1.2"
+    "nyc": "^15.1.0",
+    "prettier": "^2.1.2",
+    "start-server-and-test": "^1.12.0"
   },
   "husky": {
     "hooks": {
