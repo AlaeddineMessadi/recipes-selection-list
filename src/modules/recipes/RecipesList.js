@@ -37,8 +37,11 @@ const Recipes = () => {
     });
 
     setRecipes(selectedRecipes);
-
     checkMinMaxRecipesSelected();
+
+    // update Summary list
+    const selectedList = makeSummary(selectedRecipes);
+    setSummary(selectedList);
   };
 
   const handleRemoveRecipe = (recipeId) => {
@@ -58,7 +61,19 @@ const Recipes = () => {
 
     setRecipes(selectedRecipes);
     checkMinMaxRecipesSelected();
+
+    // update Summary List
+    const selectedList = makeSummary(selectedRecipes);
+    setSummary(selectedList);
   };
+
+  const makeSummary = (recipes) =>
+    recipes
+      .filter((recipe) => recipe.selected > 0)
+      .map((recipe) => ({
+        title: `${recipe.name}${recipe.selected > 1 ? ' x ' + recipe.selected : ''}`,
+        price: parseRawPrice((box.baseRecipePrice + recipe.extraCharge) * recipe.selected),
+      }));
 
   /**
    * Check minRecipesSelected and maxRecipesSelected exceeded
@@ -73,7 +88,7 @@ const Recipes = () => {
   }, [box.max, box.min, recipes]);
 
   // price summary and total price, feel free to remove or rename these variables and values.
-  const summary = [];
+  const [summary, setSummary] = React.useState([]);
   const totalPrice = parseRawPrice(0);
 
   React.useEffect(() => {

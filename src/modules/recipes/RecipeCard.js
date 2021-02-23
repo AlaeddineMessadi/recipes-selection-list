@@ -97,7 +97,7 @@ const UnselectedRecipeFooter = ({
     </Box>
     <Box flex="50%">
       <Button
-        onClick={() => handleAddRecipe()}
+        onClick={() => handleAddRecipe(recipeId)}
         variant="secondary"
         width="100%"
         p="0"
