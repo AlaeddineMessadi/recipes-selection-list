@@ -22,7 +22,7 @@ const Recipes = () => {
     // do not add any recipe when the Box is Full
     if (maxRecipesSelected) return;
 
-    // search and add selected recipe
+    // find and update selected recipe
     let selectedRecipes = recipes.map((recipe) => {
       const { id, selected, selectionLimit } = recipe;
       if (id !== recipeId) {
@@ -70,10 +70,20 @@ const Recipes = () => {
       .filter((recipe) => recipe.selected > 0)
       .map((recipe) => ({
         title: `${recipe.name}${recipe.selected > 1 ? ' x ' + recipe.selected : ''}`,
-        price: parseRawPrice((box.baseRecipePrice + recipe.extraCharge) * recipe.selected),
+        price: (box.baseRecipePrice + recipe.extraCharge) * recipe.selected,
       }));
+
+    // add Shipping const
+    selectedList.push({
+      title: 'Shipping',
+      price: box.shippingPrice,
+    });
+
+    const total = selectedList.reduce((sum, item) => sum + item.price, 0);
+
     setSummary(selectedList);
-  }, [box.baseRecipePrice, recipes]);
+    setTotalPrice(total);
+  }, [box.baseRecipePrice, box.shippingPrice, recipes]);
 
   /**
    * Check minRecipesSelected and maxRecipesSelected exceeded
@@ -89,7 +99,7 @@ const Recipes = () => {
 
   // price summary and total price, feel free to remove or rename these variables and values.
   const [summary, setSummary] = React.useState([]);
-  const totalPrice = parseRawPrice(0);
+  const [totalPrice, setTotalPrice] = React.useState(0);
 
   React.useEffect(() => {
     const { recipes: fetchedRecipes, min, max, baseRecipePrice, shippingPrice } = data;
@@ -115,7 +125,7 @@ const Recipes = () => {
         <Col sm={6}>
           <Flex alignItems="center" justifyContent="flex-end">
             <Box textAlign="right" mr="xs">
-              <h3>{totalPrice}</h3>
+              <h3>{parseRawPrice(totalPrice)}</h3>
             </Box>
             <PriceInfo summary={summary} totalPrice={totalPrice} />
           </Flex>
