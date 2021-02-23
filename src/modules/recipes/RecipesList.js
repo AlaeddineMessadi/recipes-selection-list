@@ -17,26 +17,50 @@ const Recipes = () => {
   const [minRecipesSelected, setMinRecipesSelected] = React.useState(false);
   const [maxRecipesSelected, setMaxRecipesSelected] = React.useState(false);
 
+  console.log(minRecipesSelected, maxRecipesSelected);
+
   // add/remove recipe, feel free to remove or rename these these variables and values.
   const handleAddRecipe = (recipeId) => {
+    // do not add any recipe when the Box is Full
+    if (maxRecipesSelected) return;
+
+    // search and add selected recipe
     let recipesClone = recipes.map((recipe) => {
       const { id, selected, selectionLimit } = recipe;
       if (id !== recipeId) {
         return recipe;
       }
 
-      if (!selectionLimit || selected < selectionLimit) {
+      console.log(selected, selectionLimit);
+      if (!selectionLimit || selected <= selectionLimit) {
         recipe.selected = selected + 1;
       }
 
-      console.log(recipe.selected);
       return recipe;
     });
 
     setRecipes(recipesClone);
+
+    checkMinMaxRecipesSelected();
   };
 
   const handleRemoveRecipe = () => null;
+
+  const checkMinMaxRecipesSelected = () => {
+    const selectionsNumber = recipes
+      .filter((recipe) => recipe.selected > 0)
+      .reduce((accumulator, recipe) => accumulator + recipe.selected, 0);
+
+    console.log(selectionsNumber);
+
+    if (selectionsNumber <= box.min) {
+      setMinRecipesSelected(true);
+    }
+
+    if (selectionsNumber >= box.max) {
+      setMaxRecipesSelected(true);
+    }
+  };
 
   // min/max recipe boundaries, feel free to remove or rename these variables and values.
   // const minRecipesSelected = false;
