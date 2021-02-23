@@ -101,8 +101,8 @@ const UnselectedRecipeFooter = ({
         variant="secondary"
         width="100%"
         p="0"
-        disabled={false}>
-        {!minRecipesSelected ? 'Add extra meal' : 'Add'}
+        disabled={maxRecipesSelected}>
+        {minRecipesSelected ? 'Add extra meal' : 'Add'}
       </Button>
     </Box>
   </Flex>

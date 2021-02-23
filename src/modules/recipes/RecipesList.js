@@ -17,8 +17,6 @@ const Recipes = () => {
   const [minRecipesSelected, setMinRecipesSelected] = React.useState(false);
   const [maxRecipesSelected, setMaxRecipesSelected] = React.useState(false);
 
-  console.log(minRecipesSelected, maxRecipesSelected);
-
   // add/remove recipe, feel free to remove or rename these these variables and values.
   const handleAddRecipe = (recipeId) => {
     // do not add any recipe when the Box is Full
@@ -65,21 +63,14 @@ const Recipes = () => {
   /**
    * Check minRecipesSelected and maxRecipesSelected exceeded
    */
-  const checkMinMaxRecipesSelected = () => {
+  const checkMinMaxRecipesSelected = React.useCallback(() => {
     const selectionsNumber = recipes
       .filter((recipe) => recipe.selected > 0)
       .reduce((accumulator, recipe) => accumulator + recipe.selected, 0);
 
-    console.log('selectionsNumber: ', selectionsNumber);
-
-    if (selectionsNumber <= box.min) {
-      setMinRecipesSelected(true);
-    }
-
-    if (selectionsNumber >= box.max) {
-      setMaxRecipesSelected(true);
-    }
-  };
+    setMinRecipesSelected(selectionsNumber >= box.min);
+    setMaxRecipesSelected(selectionsNumber >= box.max);
+  }, [box.max, box.min, recipes]);
 
   // price summary and total price, feel free to remove or rename these variables and values.
   const summary = [];
@@ -91,8 +82,9 @@ const Recipes = () => {
     if (fetchedRecipes) {
       setRecipes(fetchedRecipes);
       setBox({ min, max, baseRecipePrice, shippingPrice });
+      checkMinMaxRecipesSelected();
     }
-  }, [setRecipes, data]);
+  }, [setRecipes, data, checkMinMaxRecipesSelected]);
 
   if (loading) {
     return null;
