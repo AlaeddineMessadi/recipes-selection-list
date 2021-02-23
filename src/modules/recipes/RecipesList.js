@@ -25,13 +25,12 @@ const Recipes = () => {
     if (maxRecipesSelected) return;
 
     // search and add selected recipe
-    let recipesClone = recipes.map((recipe) => {
+    let selectedRecipes = recipes.map((recipe) => {
       const { id, selected, selectionLimit } = recipe;
       if (id !== recipeId) {
         return recipe;
       }
 
-      console.log(selected, selectionLimit);
       if (!selectionLimit || selected <= selectionLimit) {
         recipe.selected = selected + 1;
       }
@@ -39,19 +38,39 @@ const Recipes = () => {
       return recipe;
     });
 
-    setRecipes(recipesClone);
+    setRecipes(selectedRecipes);
 
     checkMinMaxRecipesSelected();
   };
 
-  const handleRemoveRecipe = () => null;
+  const handleRemoveRecipe = (recipeId) => {
+    // search and add selected recipe
+    let selectedRecipes = recipes.map((recipe) => {
+      const { id, selected } = recipe;
+      if (id !== recipeId) {
+        return recipe;
+      }
 
+      if (selected > 0) {
+        recipe.selected = selected - 1;
+      }
+
+      return recipe;
+    });
+
+    setRecipes(selectedRecipes);
+    checkMinMaxRecipesSelected();
+  };
+
+  /**
+   * Check minRecipesSelected and maxRecipesSelected exceeded
+   */
   const checkMinMaxRecipesSelected = () => {
     const selectionsNumber = recipes
       .filter((recipe) => recipe.selected > 0)
       .reduce((accumulator, recipe) => accumulator + recipe.selected, 0);
 
-    console.log(selectionsNumber);
+    console.log('selectionsNumber: ', selectionsNumber);
 
     if (selectionsNumber <= box.min) {
       setMinRecipesSelected(true);
@@ -61,10 +80,6 @@ const Recipes = () => {
       setMaxRecipesSelected(true);
     }
   };
-
-  // min/max recipe boundaries, feel free to remove or rename these variables and values.
-  // const minRecipesSelected = false;
-  // const maxRecipesSelected = false;
 
   // price summary and total price, feel free to remove or rename these variables and values.
   const summary = [];

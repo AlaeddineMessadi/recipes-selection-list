@@ -102,7 +102,7 @@ const UnselectedRecipeFooter = ({
         width="100%"
         p="0"
         disabled={false}>
-        {false ? 'Add extra meal' : 'Add'}
+        {!minRecipesSelected ? 'Add extra meal' : 'Add'}
       </Button>
     </Box>
   </Flex>
@@ -141,7 +141,7 @@ const SelectedRecipeFooter = ({
     <SelectionButton
       onClick={() => handleAddRecipe()}
       title="Increase quantity"
-      disabled={selected === selectionLimit}>
+      disabled={selected === selectionLimit || maxRecipesSelected}>
       <IconPlusCircle />
     </SelectionButton>
   </Flex>
