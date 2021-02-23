@@ -138,7 +138,10 @@ const SelectedRecipeFooter = ({
         ({selected * yields} servings)
       </Text>
     </Box>
-    <SelectionButton onClick={() => handleAddRecipe()} title="Increase quantity" disabled={false}>
+    <SelectionButton
+      onClick={() => handleAddRecipe()}
+      title="Increase quantity"
+      disabled={selected === selectionLimit}>
       <IconPlusCircle />
     </SelectionButton>
   </Flex>
