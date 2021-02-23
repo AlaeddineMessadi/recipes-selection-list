@@ -14,7 +14,24 @@ const Recipes = () => {
   const { data, loading } = useFetchHelloFreshBox();
 
   // add/remove recipe, feel free to remove or rename these these variables and values.
-  const handleAddRecipe = () => null;
+  const handleAddRecipe = (recipeId) => {
+    let recipesClone = recipes.map((recipe) => {
+      const { id, selected, selectionLimit } = recipe;
+      if (id !== recipeId) {
+        return recipe;
+      }
+
+      if (!selectionLimit || selected < selectionLimit) {
+        recipe.selected = selected + 1;
+      }
+
+      console.log(recipe.selected);
+      return recipe;
+    });
+
+    setRecipes(recipesClone);
+  };
+
   const handleRemoveRecipe = () => null;
 
   // min/max recipe boundaries, feel free to remove or rename these variables and values.
@@ -59,8 +76,8 @@ const Recipes = () => {
             <Box mb="md">
               <RecipeCard
                 {...recipe}
-                handleAddRecipe={handleAddRecipe}
-                handleRemoveRecipe={handleRemoveRecipe}
+                handleAddRecipe={() => handleAddRecipe(recipe.id)}
+                handleRemoveRecipe={() => handleRemoveRecipe(recipe.id)}
                 minRecipesSelected={minRecipesSelected}
                 maxRecipesSelected={maxRecipesSelected}
               />
