@@ -11,6 +11,7 @@ import useFetchHelloFreshBox from '../../hooks/useFetchHelloFreshBox';
 const Recipes = () => {
   // This state stores the array of recipes with the changes performed by the customer.
   const [recipes, setRecipes] = React.useState([]);
+  const [box, setBox] = React.useState({});
   const { data, loading } = useFetchHelloFreshBox();
 
   const [minRecipesSelected, setMinRecipesSelected] = React.useState(false);
@@ -46,10 +47,11 @@ const Recipes = () => {
   const totalPrice = parseRawPrice(0);
 
   React.useEffect(() => {
-    const { recipes: fetchedRecipes } = data;
+    const { recipes: fetchedRecipes, min, max, baseRecipePrice, shippingPrice } = data;
 
     if (fetchedRecipes) {
       setRecipes(fetchedRecipes);
+      setBox({ min, max, baseRecipePrice, shippingPrice });
     }
   }, [setRecipes, data]);
 
