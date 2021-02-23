@@ -6,8 +6,8 @@ import Text from '../../components/Text';
 import { parseRawPrice } from './price';
 
 // Create PriceSummary user interface
-const PriceSummary = ({ summary, totalPrice }) => (
-  <Box width={['290px', '450px']} margin="sm">
+const PriceSummary = ({ summary = [], totalPrice = '0' }) => (
+  <Box width={['290px', '450px']} margin="sm" data-testid="price-summary">
     <Box borderBottomWidth="sm" borderBottomColor="border" borderBottomStyle="solid">
       {summary.map((recipe, index) => (
         <Row key={index}>

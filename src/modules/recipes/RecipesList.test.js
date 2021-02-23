@@ -1,7 +1,7 @@
 import React from 'react';
 import RecipesList from './RecipesList';
 // import react-testing methods
-import { render, fireEvent, waitFor, screen } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 
 describe('RecipesList: *****', () => {
   test('RecipesList should render without crashing', async () => {
@@ -14,7 +14,7 @@ describe('RecipesList: *****', () => {
   });
 
   test('RecipesList should render list of 21 recipes', async () => {
-    const { container, getByText, debug } = render(<RecipesList />);
+    const { container, getByText } = render(<RecipesList />);
 
     // wait untill fetched and render data
     await waitFor(() => expect(getByText('WEEK OF OCTOBER 12TH')).toBeInTheDocument());

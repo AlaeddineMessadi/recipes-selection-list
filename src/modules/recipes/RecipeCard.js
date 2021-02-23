@@ -127,7 +127,7 @@ const SelectedRecipeFooter = ({
   handleRemoveRecipe,
 }) => (
   <Flex backgroundColor="primary_600" justifyContent="space-between" alignItems="center">
-    <SelectionButton onClick={() => handleRemoveRecipe()} title="Decrease quantity">
+    <SelectionButton onClick={() => handleRemoveRecipe(recipeId)} title="Decrease quantity">
       <IconMinusCircle />
     </SelectionButton>
     <Box color="white">
@@ -139,7 +139,7 @@ const SelectedRecipeFooter = ({
       </Text>
     </Box>
     <SelectionButton
-      onClick={() => handleAddRecipe()}
+      onClick={() => handleAddRecipe(recipeId)}
       title="Increase quantity"
       disabled={selected === selectionLimit || maxRecipesSelected}>
       <IconPlusCircle />
