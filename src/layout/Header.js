@@ -9,7 +9,7 @@ const Header = () => (
     alignItems="center"
     padding="sm">
     <a href="/" title="Home">
-      <img height="30px" src="/HelloFreshLogo.png" alt="HelloFresh Logo" />
+      <img height="80px" src="/recipe-logo.png" alt="Recipe List Logo" />
     </a>
   </Flex>
 );
