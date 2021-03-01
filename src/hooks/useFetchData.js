@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import data from '../data/box';
+import dataBox from '../data/box';
 
 const useFetchData = () => {
   const [data, setData] = useState({});
@@ -7,7 +7,7 @@ const useFetchData = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setData(data);
+      setData(dataBox);
       setLoading(false);
     }, 1000);
 
